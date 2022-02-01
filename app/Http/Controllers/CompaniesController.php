@@ -41,18 +41,22 @@ class CompaniesController extends Controller
     {
         /*dd($request->all());*/
         $data = $request->validate([
-            'name' => 'required',
+            'name' => 'bail|required',
             'address' => 'required',
             'phone' => ['required', 'numeric', new PhoneNumber]
         ]);
         // dd($data);
         
-        $compony = new Company;
+        
+            Company::create($data);
+
+           /* dd($company);*/     
+        /*$compony = new Company;
         $compony->name=$data['name'];
         $compony->address=$data['address'];
         $compony->phone=$data['phone'];
         $compony->save();
-
+*/ 
         return redirect()->route('companies.index');
     }
 
@@ -62,9 +66,12 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response    
      */
-    public function show($id)
+    public function show($company)
     {
-        //
+        $company=Company::find($company);
+        return view('companies.show', [
+            'company' => $company
+        ]);
     }
 
     /**

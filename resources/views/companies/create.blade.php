@@ -20,11 +20,11 @@
 		  </div>
 		  <div class="mb-3">
 		    <label for="address" class="form-label">Tashkilot Manzili</label>
-		    <input type="text" class="form-control" id="address" name="address" value="{{old(address)}}">
+		    <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}">
 		  </div>
 		  <div class="mb-3">
 		    <label class="form-check-label" for="phone">Tashkilot Tel Raqami</label>
-		    <input type="text" class="form-control" id="phone" name="phone" value="{{old(phone)}}">
+		    <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone')}}">
 		  </div>
 		  <button type="submit" class="btn btn-primary">Submit</button>
         </form>

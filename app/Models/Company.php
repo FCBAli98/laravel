@@ -28,5 +28,8 @@ class Company extends Model
         'active' => true
     ];*/
         
+    protected $fillable = ['name', 'address', 'phone'];
+    
+    protected $guarded = ['id'];    
         
 }
