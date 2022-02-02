@@ -29,3 +29,7 @@ Route::get('/members', [HomeController::class, 'members']);
 */
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -14,15 +14,28 @@
 				<td>Tashkilot nomi</td>
 				<td>Tashkilot manzili</td>
 				<td>Tashkilot tel raqami</td>
+				<td>Amallar</td>
+				
 			</tr>
 			<tbody>
 				@foreach($companies as $company)
 
 				<tr>
 					<td>{{ (($companies->currentpage()-1)*$companies->perpage() + ($loop->index+1))}}</td>
-					<td>{{$company->name}}</td>
+					<td>
+						<a href="{{route('companies.show', ['company'=>$company->id])}}" class="nav-link ">{{$company->name}}</a>
+					</td>
 					<td>{{$company->address}}</td>
 					<td>{{$company->phone}}</td>
+					<td>
+						<a href="{{route('companies.edit', ['company'=>$company->id])}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+						<form action="{{route('companies.destroy', ['company'=>$company->id])}}" method="post">
+							@csrf
+							@method('DELETE')
+						    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+						</form>
+					</td>
+					
 			    </tr>
 			    @endforeach
 			</tbody>

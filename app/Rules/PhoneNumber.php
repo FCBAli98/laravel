@@ -24,8 +24,9 @@ class PhoneNumber implements Rule
      * @return bool
      */
     public function passes($attribute, $value)
-    {
-        return substr($value,0,1)== '+' && strlen($value)== 14; 
+    {    
+        
+        return substr($value,0,1)== '+' && strlen($value)== 12; 
     }
 
     /**

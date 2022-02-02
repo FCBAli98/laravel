@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Rules\PhoneNumber;
+use App\Http\Requests\SaveCompanyRequest;
 class CompaniesController extends Controller
 {
     /**
@@ -28,7 +29,10 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        $company=new Company();
+        return view('companies.create', [
+            'company'=>$company
+        ]);
     }
 
     /**
@@ -37,18 +41,19 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveCompanyRequest $request)
     {
         /*dd($request->all());*/
-        $data = $request->validate([
+        /*$data = $request->validate([
             'name' => 'bail|required',
             'address' => 'required',
             'phone' => ['required', 'numeric', new PhoneNumber]
-        ]);
+        ]);*/
         // dd($data);
         
         
-            Company::create($data);
+        
+            Company::create($request->validated());
 
            /* dd($company);*/     
         /*$compony = new Company;
@@ -66,9 +71,9 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response    
      */
-    public function show($company)
+    public function show(Company $company)
     {
-        $company=Company::find($company);
+        /*$company=Company::findorFail($company);*/
         return view('companies.show', [
             'company' => $company
         ]);
@@ -80,9 +85,12 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        /*$company=Company::find($company);*/
+        return view('companies.edit', [
+            'company' => $company
+        ]);
     }
 
     /**
@@ -92,9 +100,13 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaveCompanyRequest $request, Company $company)
     {
-        //
+       
+        
+            $company->update($request->validated());
+            return redirect()->route('companies.index');
+            /*Company::create($data);*/
     }
 
     /**
@@ -103,8 +115,23 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        
+        $company->delete();
+
+        return redirect()->route('companies.index');
+
+        /*return redirect()->route('companies.destroy');*/
+    }
+
+    public function ValidateData(){
+
+        return request()->validate([
+            'name' => 'bail|required',
+            'address' => 'required',
+            'phone' => ['required', 'numeric', new PhoneNumber]
+        ]);
+
     }
 }
